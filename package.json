@@ -1,0 +1,27 @@
+{
+  "name": "nodejs-api",
+  "version": "1.0.0",
+  "description": "Tools to install: - Node.js",
+  "main": "index.js",
+  "dependencies": {
+    "mongoose": "^5.1.6",
+    "underscore": "^1.9.1"
+  },
+  "devDependencies": {
+    "jshint": "^2.9.5"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/efrenjose/nodejs-api.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/efrenjose/nodejs-api/issues"
+  },
+  "homepage": "https://github.com/efrenjose/nodejs-api#readme"
+}

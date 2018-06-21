@@ -7,3 +7,7 @@ Tools to install:
 - mongoose
 - npm i -g npm-check-updates
 - jshint --save-dev
+- express
+- nodemon -g
+- set up environment variable for port
+    -  mac: export PORT=5000,  windos use set

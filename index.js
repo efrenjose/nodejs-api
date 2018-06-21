@@ -28,10 +28,7 @@ app.post('/api/courses', (req, res) => {
     
     //validate
     const { error } = validateCourse(req.body);
-    if (error) {
-        res.status(400).send(error);
-        return;
-    }
+    if (error) return res.status(400).send(error);
 
     //create
     course = {
@@ -46,20 +43,27 @@ app.put('/api/courses/:id', (req, res) => {
     
     //find course
     const course = courses.find(c => c.id === parseInt(req.params.id));
-    if (!course) res.status(404).send('Course not found.');
-    res.send(course);
+    if (!course) return res.status(404).send('Course not found.');
 
     //validate
     const { error } = validateCourse(req.body);
-    if (error) {
-        res.status(400).send(error);
-        return;
-    }
+    if (error) return res.status(400).send(error);
 
     //update
     course.name = req.body.name;
     res.send(course);
 });
+
+app.delete('/api/courses/:id', (req, res) => {
+    //find course
+    const course = courses.find(c => c.id === parseInt(req.params.id));
+    if (!course) return res.status(404).send('Course not found.');
+
+    const index = courses.indexOf(course);
+    courses.splice(index, 1);
+
+    res.send(course);
+})
 
 function validateCourse(course) {
     const schema = {

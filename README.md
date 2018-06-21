@@ -11,3 +11,4 @@ Tools to install:
 - nodemon -g
 - set up environment variable for port
     -  mac: export PORT=5000,  windos use set
+- npm joi 13.1.0

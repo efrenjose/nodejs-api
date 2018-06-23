@@ -2,6 +2,8 @@ const Joi = require('joi');
 const helmet = require('helmet');
 const morgan = require('morgan');
 const config = require('config');
+const startupDebugger = require('debug')('app:startup');
+const dbDebugger = require('debug')('app:db');
 const logger = require('./logger');
 const authenticate = require('./authentication');
 const express = require('express');
@@ -18,9 +20,8 @@ console.log('Mail Server: ' + config.get('mail.host'));
 console.log('Mail Server password: ' + config.get('mail.password'));
 if (app.get('env') === 'development') {
     app.use(morgan('dev'));
-    console.log('Morgan enabled...');
+    startupDebugger('Morgan enabled...');
 }
-
 app.use(logger);
 app.use(authenticate);
 

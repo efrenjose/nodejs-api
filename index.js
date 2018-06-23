@@ -1,6 +1,7 @@
 const Joi = require('joi');
 const helmet = require('helmet');
 const morgan = require('morgan');
+const config = require('config');
 const logger = require('./logger');
 const authenticate = require('./authentication');
 const express = require('express');
@@ -10,10 +11,16 @@ app.use(express.json()); //parses request object into json and sets req.body
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 app.use(helmet());
+
+//Config
+console.log('Application Name: ' + config.get('name'));
+console.log('Mail Server: ' + config.get('mail.host'));
+console.log('Mail Server password: ' + config.get('mail.password'));
 if (app.get('env') === 'development') {
     app.use(morgan('dev'));
     console.log('Morgan enabled...');
 }
+
 app.use(logger);
 app.use(authenticate);
 

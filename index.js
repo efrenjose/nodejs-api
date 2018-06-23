@@ -1,10 +1,16 @@
 const Joi = require('joi');
+const helmet = require('helmet');
+const morgan = require('morgan');
 const logger = require('./logger');
-const authenticate = rquire('./authenticate');
+const authenticate = require('./authentication');
 const express = require('express');
 const app = express();
 
 app.use(express.json()); //parses request object into json and sets req.body
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static('public'));
+app.use(helmet());
+app.use(morgan('dev'));
 app.use(logger);
 app.use(authenticate);
 

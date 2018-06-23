@@ -10,7 +10,10 @@ app.use(express.json()); //parses request object into json and sets req.body
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 app.use(helmet());
-app.use(morgan('dev'));
+if (app.get('env') === 'development') {
+    app.use(morgan('dev'));
+    console.log('Morgan enabled...');
+}
 app.use(logger);
 app.use(authenticate);
 

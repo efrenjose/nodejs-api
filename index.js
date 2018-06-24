@@ -6,7 +6,7 @@ const dbDebugger = require('debug')('app:db');
 const logger = require('./middleware/logger');
 const authenticate = require('./authentication');
 const home = require('./routes/home');
-const courses = require('./routes/courses')
+const courses = require('./routes/genres')
 const express = require('express');
 const app = express();
 
@@ -18,7 +18,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 app.use(helmet());
 app.use('/', home);
-app.use('/api/courses', courses);
+app.use('/api/genres', courses);
 
 //Config
 console.log('Application Name: ' + config.get('name'));

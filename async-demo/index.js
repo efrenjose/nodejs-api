@@ -7,7 +7,7 @@ console.log('Before');
   })
 });*/
 
-var result = getUser(1)
+getUser(1)
     .then(user => getRepositories(user.gitHubUsername))
     .then(repos => getCommits(repos[0]))
     .then(commits => console.log('Commit', commits))

@@ -7,7 +7,7 @@ mongoose.connect('mongodb://localhost/playground')
 const courseSchema = new mongoose.Schema({
     name: String,
     author: String,
-    tags: [String],
+    tags: [ String ],
     date: { type: Date, default: Date.Now },
     isPublished: Boolean
 });

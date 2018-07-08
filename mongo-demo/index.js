@@ -14,6 +14,36 @@ const courseSchema = new mongoose.Schema({
 
 const Course = mongoose.model('Course', courseSchema);
 
+// *** Get Courses *** //
+async function getCourses() {
+    return await Course
+    .find({ isPublished: true, tags: 'backend'})
+    .sort({ name: 1})
+    .select({ name: 1, author: 1})
+}
+
+// *** Get Courses - Sort them by price *** //
+async function getCoursesByPrice() {
+    return await Course
+    .find({ isPublished: true })
+    .or([ { tags: 'frontend' }, { tags: 'backend' } ])
+    .sort('-price')
+    .select('name author price');
+}
+
+// *** Get Courses - Use regular expression *** //
+async function getCoursesRegEx() {
+    return await Course
+    .find({ isPublished: true })
+    .or([  
+      { price: { $gte: 15 } },
+      { name: /.*by.*/i }
+    ])
+    .sort('-price')
+    .select('name author price');
+}
+
+// *** Create Course *** //
 async function createCourse() {
     const course = new Course({
         name: 'Node.js Course',
@@ -26,14 +56,12 @@ async function createCourse() {
     console.log(result);
 }
 
-async function getCourses() {
-    const courses = await Course
-        .find({ author: 'Mosh', isPublished: true })
-        .limit(10)
-        .sort({ name: 1})
-        .select({ name: 1, tags: 1});
+async function run() {
+    const courses  = await getCourses();
+    const courses  = await getCoursesByPrice();
+    const courses  = await getCoursesRegEx();
+    const courses  = await createCourse();
     console.log(courses);
 }
 
-//createCourse();
-getCourses();
+run();

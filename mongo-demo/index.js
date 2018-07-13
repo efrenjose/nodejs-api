@@ -5,14 +5,50 @@ mongoose.connect('mongodb://localhost/mongo-exercises')
     .catch(err => console.log('Could not connect to MongoDB...', err));
 
 const courseSchema = new mongoose.Schema({
-    name: String,
+    name: { 
+        type: String, 
+        required: true,
+        minlength: 5,
+        maxlength: 255},
     author: String,
     tags: [ String ],
     date: { type: Date, default: Date.Now },
-    isPublished: Boolean
+    isPublished: Boolean,
+    price: {
+        type: Number,
+        min: 10,
+        maz: 200,
+        required: function() { return this.isPublished; }
+    },
+    category: {
+        type: String,
+        required: true,
+        enum: ['web', 'mobile', 'network']
+    }
 });
 
 const Course = mongoose.model('Course', courseSchema);
+
+// *** Create Course *** //
+async function createCourse() {
+    const course = new Course({
+        author: 'Mosh',
+        tags: ['node', 'backend'],
+        isPublished: true,
+        category: 'some category'
+    });
+
+    try {
+        // course.validate((err) => {
+        //     if (err) { }
+        // })
+
+        const result = await course.save();
+        console.log(result);
+    } catch (error) {
+        console.log(error.message);
+    }
+}
 
 // *** Get Courses *** //
 async function getCourses() {
@@ -41,19 +77,6 @@ async function getCoursesRegEx() {
     ])
     .sort('-price')
     .select('name author price');
-}
-
-// *** Create Course *** //
-async function createCourse() {
-    const course = new Course({
-        name: 'Node.js Course',
-        author: 'Mosh',
-        tags: ['node', 'backend'],
-        isPublished: true
-    });
-
-    const result = await course.save();
-    console.log(result);
 }
 
 // *** Update Course -  Query first *** //
@@ -105,11 +128,11 @@ async function run() {
     //const courses = await getCourses();
     //const courses = await getCoursesByPrice();
     //const courses = await getCoursesRegEx();
-    //const courses = await createCourse();
+    const courses = await createCourse();
     //const courses = await updateCourseQueryFirst('5b424f7b08e7a90e89153d0a');
     //const courses = await updateCourseUpdateFirst('5b424f7b08e7a90e89153d0a');
     //const courses = await updateCourseUpdateFirstFindByIdAndUpdate('5b424f7b08e7a90e89153d0a');
-    const courses = await removeCourse('5b424f7b08e7a90e89153d0a');
+    //const courses = await removeCourse('5b424f7b08e7a90e89153d0a');
     console.log(courses);
 }
 

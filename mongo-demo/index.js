@@ -59,7 +59,7 @@ async function createCourse() {
         console.log(result);
     } catch (ex) {
         for (field in ex.errors)
-            console.log(ex.errors[field]);
+            console.log(ex.errors[field].message);
     }
 }
 

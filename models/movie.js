@@ -40,3 +40,4 @@ function ValidateMovie(movie) {
 }
 
 module.exports.Movie = Movie;
+module.exports.Validate = ValidateMovie;

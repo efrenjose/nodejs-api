@@ -1,4 +1,4 @@
-const auth = require('../middleware/auth')
+const authorization = require('../middleware/authorization')
 const { Genre, validate } = require('../models/genres');
 const express = require('express');
 const router = express.Router();
@@ -8,7 +8,7 @@ const router = express.Router();
     res.send(genres);
   });
   
-  router.post('/', auth, async (req, res) => {
+  router.post('/', authorization, async (req, res) => {
     const { error } = validate(req.body); 
     if (error) return res.status(400).send(error.details[0].message);
   

@@ -15,6 +15,12 @@ const mongoose = require('mongoose');
 const express = require('express');
 const app = express();
 
+//Log uncaught exceptions outside of the express context
+process.on('uncaughtException', (ex) => {
+    console.log('WE GOT AN UNCAUGHT EXCEPTION');
+    winston.error(ex.message, ex);
+})
+
 winston.add(winston.transports.File, { filename: 'logfile.log'});
 winston.add(winston.transports.MongoDB, { db: 'mongodb://localhost/vidly', level: 'error' });
 

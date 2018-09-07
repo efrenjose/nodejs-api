@@ -17,13 +17,16 @@ const app = express();
 
 //Log uncaught exceptions outside of the express context
 process.on('uncaughtException', (ex) => {
-    console.log('WE GOT AN UNCAUGHT EXCEPTION');
     winston.error(ex.message, ex);
+    process.exit(1);
 })
 
+
+
+//Log unhandled rejections outside of the express context
 process.on('unhandledRejection', (ex) => {
-    console.log('WE GOT AN UNHANDLED REJECTION');
     winston.error(ex.message, ex);
+    process.exit(1);
 })
 
 winston.add(winston.transports.File, { filename: 'logfile.log'});
